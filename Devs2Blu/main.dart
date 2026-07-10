@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'contato.dart';
+import 'contatoPessoal.dart';
+import 'contatoEmpresarial.dart';
 import 'agenda.dart';
 
-Agenda agenda = Agenda();
-
-Contato contato = Contato('', '', '');
+// Contato contato = ContatoPessoal('', '', '');
+Agenda agenda = Agenda([]);
 
 void main(List<String> args) {
   while (true) {
@@ -23,28 +24,28 @@ void main(List<String> args) {
 
     switch (opcao) {
       case '1':
-        adicionar();
+        agenda.adicionar();
         break;
       case '2':
-        listar();
+        agenda.listar();
         break;
       case '3':
-        editar();
+        agenda.editar();
         break;
       case '4':
-        remover();
+        agenda.remover();
         break;
       case '5':
-        salvarAgenda();
+        agenda.salvarAgenda();
         break;
       case '6':
-        buscar();
+        agenda.buscar();
         break;
       case '7':
-        exibirHistorico();
+        agenda.exibirHistorico();
         break;
       case '8':
-        carregarAgenda();
+        agenda.carregarAgenda();
         break;
       case '9':
         print('Saindo...');
