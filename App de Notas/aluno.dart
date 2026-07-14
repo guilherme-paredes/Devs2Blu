@@ -1,16 +1,13 @@
 import 'nota.dart';
 
-// Um Aluno tem um nome e a sua própria lista de notas.
-// (Isso é composição: o Aluno "tem" Notas dentro dele.)
 class Aluno {
+   
   String nome;
   List<Nota> notas = [];
 
   Aluno(this.nome);
 
-  // Média ponderada: soma de (valor * peso) dividido pela soma dos pesos.
-  // Repare que não existe nenhum "if" checando o tipo da nota aqui.
-  // O n.peso já vem certo sozinho, dependendo se é Prova ou Trabalho.
+
   double get media {
     if (notas.isEmpty) return 0;
 
@@ -31,4 +28,10 @@ class Aluno {
       'notas': notas.map((nota) => nota.toMap()).toList(),
     };
   }
+
+  factory Aluno.fromMap(Map<String, dynamic> map){
+    return Aluno(map['nome']);
+  }
+
+
 }

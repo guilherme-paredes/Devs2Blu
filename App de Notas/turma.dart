@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'aluno.dart';
 import 'nota.dart';
 
-// A Turma é a dona das operações.
-// A lista de alunos é privada (o _ na frente do nome faz isso em Dart).
-// Ninguém de fora mexe direto na lista: só através dos métodos daqui.
 class Turma {
   final List<Aluno> _alunos = [];
 
@@ -38,7 +35,6 @@ class Turma {
     }
   }
 
-  // Junta os dados de todos os alunos e transforma em texto JSON.
   String exportarJson() {
     var lista = _alunos.map((aluno) => aluno.toMap()).toList();
     return jsonEncode(lista);
