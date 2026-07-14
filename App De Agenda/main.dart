@@ -1,10 +1,6 @@
 import 'dart:io';
-import 'contato.dart';
-import 'contatoPessoal.dart';
-import 'contatoEmpresarial.dart';
 import 'agenda.dart';
 
-// Contato contato = ContatoPessoal('', '', '');
 Agenda agenda = Agenda([]);
 
 void main(List<String> args) {

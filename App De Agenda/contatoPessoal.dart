@@ -5,11 +5,17 @@ class ContatoPessoal extends Contato {
   String apelido;
 
   ContatoPessoal(this.apelido, String nome, String telefone, String email)
-      : super(nome, telefone, email);
+    : super(nome, telefone, email);
 
   @override
   String imprimir() {
     return '${super.imprimir()}, Apelido: $apelido';
+  }
+
+  @override
+  void imprimirDetalhe() {
+    super.imprimirDetalhe();
+    print('Apelido: $apelido');
   }
 
   @override
@@ -32,4 +38,3 @@ class ContatoPessoal extends Contato {
     return ContatoPessoal(campos[4], campos[1], campos[2], campos[3]);
   }
 }
-
