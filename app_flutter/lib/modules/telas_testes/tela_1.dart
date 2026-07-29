@@ -9,7 +9,11 @@ class Tela1 extends StatelessWidget {
       children:[ 
         Text('entrega em:', style: TextStyle(fontSize: 12,color: Color.fromRGBO(11, 126, 17, 1)),),
         Text('Rua das Flores, 123', style: TextStyle(fontSize: 16,color: const Color.fromARGB(255, 0, 0, 0)),),
-        Expanded(child: Container(width: 38,height: 38,child: Text('abc'), ),)
+        Expanded(child: Container(width: 38,height: 38,decoration: BoxDecoration(color: const Color.fromARGB(255, 5, 207, 113),
+        borderRadius: BorderRadius.circular(16),image: const DecorationImage(
+        image: AssetImage('assets/images/icone.png'),fit: BoxFit.cover)
+         ),),)
+
       ],
       )],))
 
