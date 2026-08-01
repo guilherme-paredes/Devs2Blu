@@ -5,4 +5,5 @@ class AppColors {
   static const Color grey100 = Color(0xFFE0E0E0);
   static const Color errorRed = Colors.red;
   static const Color white = Color.fromARGB(255, 255, 255, 255);
+  static const Color grey140 = Color.fromARGB(255, 140, 140, 140);
 }

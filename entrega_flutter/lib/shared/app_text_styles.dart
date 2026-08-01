@@ -11,4 +11,12 @@ class AppTextStyles {
     color: AppColors.black,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle smalBlack = TextStyle(
+    color: AppColors.black,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle smalMediunGrey = TextStyle(
+    color: AppColors.grey140,
+    fontWeight: FontWeight.w500,
+  );
 }
