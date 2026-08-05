@@ -1,22 +1,55 @@
 import 'package:entrega_flutter/shared/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class AppTextField extends StatelessWidget {
-  AppTextField({super.key, required this.hintText, this.padding});
+class AppTextField extends StatefulWidget {
+  const AppTextField({
+    super.key,
+    required this.hintText,
+    this.padding,
+    this.obscureText = false,
+  });
 
   final String hintText;
   final EdgeInsetsGeometry? padding;
+  final bool obscureText;
+
+  @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  late bool isObscure;
+
+  @override
+  initState() {
+    isObscure = widget.obscureText;
+    super.initState();
+  }
+
+  void toggleObscure() {
+    setState(() {
+      isObscure = !isObscure;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding ?? const EdgeInsets.all(0.0),
+      padding: widget.padding ?? const EdgeInsets.all(0.0),
       child: TextField(
+        obscureText: isObscure,
         decoration: InputDecoration(
-          // suffixIcon: Icon(Icons.visibility),
-          // fillColor: AppColors.black,
-          // filled: true,
-          hintText: hintText,
+          suffixIcon: widget.obscureText
+              ? IconButton(
+                  onPressed: () {
+                    toggleObscure();
+                  },
+                  icon: isObscure
+                      ? Icon(Icons.visibility_off)
+                      : Icon(Icons.visibility),
+                )
+              : Icon(Icons.visibility),
+          hintText: widget.hintText,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
             borderSide: BorderSide(color: AppColors.grey100),
