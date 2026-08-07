@@ -14,6 +14,7 @@ class AppTextField extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final bool obscureText;
   final Function(String)? onChanged;
+
   @override
   State<AppTextField> createState() => _AppTextFieldState();
 }

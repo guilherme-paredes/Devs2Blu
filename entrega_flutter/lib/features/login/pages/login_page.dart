@@ -96,11 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   spacerBox,
                   AppElevatedButton(
-                    onPressed: loginController.isActiveButton
-                        ? () {
-                            print('cliquei em entrar');
-                          }
-                        : null,
+                    onPressed: loginController.isActiveButton ? () {} : null,
                     label: 'Entrar',
                     type: ButtonType.filled,
                   ),
