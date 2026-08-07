@@ -5,14 +5,15 @@ class AppTextField extends StatefulWidget {
   const AppTextField({
     super.key,
     required this.hintText,
-    this.padding,
+    this.onChanged,
     this.obscureText = false,
+    this.padding,
   });
 
   final String hintText;
   final EdgeInsetsGeometry? padding;
   final bool obscureText;
-
+  final Function(String)? onChanged;
   @override
   State<AppTextField> createState() => _AppTextFieldState();
 }
@@ -34,37 +35,35 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding ?? const EdgeInsets.all(0.0),
-      child: TextField(
-        obscureText: isObscure,
-        decoration: InputDecoration(
-          suffixIcon: widget.obscureText
-              ? IconButton(
-                  onPressed: () {
-                    toggleObscure();
-                  },
-                  icon: isObscure
-                      ? Icon(Icons.visibility_off)
-                      : Icon(Icons.visibility),
-                )
-              : Icon(Icons.visibility),
-          hintText: widget.hintText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: AppColors.grey100),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: AppColors.grey100),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: AppColors.grey100),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.errorRed),
-          ),
+    return TextField(
+      onChanged: widget.onChanged,
+      obscureText: isObscure,
+      decoration: InputDecoration(
+        suffixIcon: widget.obscureText
+            ? IconButton(
+                onPressed: () {
+                  toggleObscure();
+                },
+                icon: isObscure
+                    ? Icon(Icons.visibility_off)
+                    : Icon(Icons.visibility),
+              )
+            : Icon(Icons.visibility),
+        hintText: widget.hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.grey100),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.grey100),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.grey100),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.errorRed),
         ),
       ),
     );

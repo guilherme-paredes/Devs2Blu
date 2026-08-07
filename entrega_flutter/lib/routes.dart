@@ -1,6 +1,6 @@
-import 'package:entrega_flutter/pages/home_page.dart';
-import 'package:entrega_flutter/pages/login_page.dart';
-import 'package:entrega_flutter/pages/signup_page.dart';
+import 'package:entrega_flutter/features/login/pages/home_page.dart';
+import 'package:entrega_flutter/features/login/pages/login_page.dart';
+import 'package:entrega_flutter/features/login/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
