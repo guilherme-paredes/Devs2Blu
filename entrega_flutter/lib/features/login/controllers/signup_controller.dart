@@ -9,6 +9,9 @@ class SignupController {
   String confirmSenha = '';
   bool isActiveButton = false;
   bool isActiveCheckBox = false;
+  bool isOk = false;
+
+  final especialRegex = RegExp(r'[!@#$%^&*()_+\-=\[\]{};":"\\|,.<>\/?~`]');
 
   void setEmail(String emailParam) {
     email = emailParam;
@@ -42,5 +45,18 @@ class SignupController {
   void changeActiveCheckBox() {
     isActiveCheckBox = !isActiveCheckBox;
     changeActiveButton();
+  }
+
+  String? get senhaIsOk {
+    if (senha.trim().length >= 6)
+      return '';
+    else if (senha.trim().isNotEmpty)
+      return '';
+    else if (!senha.contains(especialRegex))
+      return '';
+    else if (!senha.contains(RegExp(r'[A-Z]')))
+      return '';
+    else if (senha == confirmSenha)
+      return '';
   }
 }
