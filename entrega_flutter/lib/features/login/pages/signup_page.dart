@@ -75,12 +75,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                     obscureText: true,
                   ),
-                  for (var requiremnt
-                      in signupController.getPasswordRequirements())
-                    AppRequiredPassword(
-                      atendido: requiremnt.values.first,
-                      text: requiremnt.keys.first,
-                    ),
+                  
                   spacerBox,
                   AppTextField(
                     hintText: 'Confirmar Senha',
@@ -90,6 +85,12 @@ class _SignupPageState extends State<SignupPage> {
                       });
                     },
                   ),
+                  for (var requiremnt
+                      in signupController.getPasswordRequirements())
+                    AppRequiredPassword(
+                      atendido: requiremnt.values.first,
+                      text: requiremnt.keys.first,
+                    ),
                   Spacer(flex: 6),
                   Row(
                     children: [
