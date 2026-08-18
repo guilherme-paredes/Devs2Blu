@@ -1,6 +1,7 @@
 import 'package:entrega_flutter/shared/app_text_styles.dart';
 import 'package:entrega_flutter/shared/widgets/app_checkbox.dart';
 import 'package:entrega_flutter/shared/widgets/app_elevated_button.dart';
+import 'package:entrega_flutter/shared/widgets/app_required_password.dart';
 import 'package:entrega_flutter/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:entrega_flutter/features/login/controllers/signup_controller.dart';
@@ -72,7 +73,14 @@ class _SignupPageState extends State<SignupPage> {
                         signupController.setSenha(value);
                       });
                     },
+                    obscureText: true,
                   ),
+                  for (var requiremnt
+                      in signupController.getPasswordRequirements())
+                    AppRequiredPassword(
+                      atendido: requiremnt.values.first,
+                      text: requiremnt.keys.first,
+                    ),
                   spacerBox,
                   AppTextField(
                     hintText: 'Confirmar Senha',

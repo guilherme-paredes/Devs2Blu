@@ -1,4 +1,5 @@
 import 'package:entrega_flutter/features/login/controllers/login_controller.dart';
+import 'package:entrega_flutter/features/login/pages/recover_page.dart';
 import 'package:entrega_flutter/features/login/pages/signup_page.dart';
 import 'package:entrega_flutter/shared/app_text_styles.dart';
 import 'package:entrega_flutter/shared/widgets/app_checkbox.dart';
@@ -89,7 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: AlignmentGeometry.centerRight,
                     child: TextButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                        Navigator.pushNamed(context, RecoverPage.route),
+                      },
                       child: Text(
                         'Esqueci minha senha',
                         style: AppTextStyles.smalBlack,

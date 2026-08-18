@@ -1,7 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
-
 class SignupController {
   String email = '';
   String senha = '';
@@ -10,8 +6,6 @@ class SignupController {
   bool isActiveButton = false;
   bool isActiveCheckBox = false;
   bool isOk = false;
-
-  final especialRegex = RegExp(r'[!@#$%^&*()_+\-=\[\]{};":"\\|,.<>\/?~`]');
 
   void setEmail(String emailParam) {
     email = emailParam;
@@ -36,10 +30,23 @@ class SignupController {
   void changeActiveButton() {
     isActiveButton =
         email.trim().isNotEmpty &&
+        nome.trim().isNotEmpty &&
         senha.trim().isNotEmpty &&
         confirmSenha.trim().isNotEmpty &&
-        senha == confirmSenha &&
         isActiveCheckBox;
+    isActiveCheckBox &&
+        minSeisCaracteres &&
+        possuiCaractereEspecial &&
+        possuiLetraMaiuscula &&
+        possuiLetraMinuscula &&
+        senhasCoincidentes;
+  }
+
+  List<Map<String, bool>> getPasswordRequirements() {
+    return [
+      {'Mínimo de 6 caracteres': minSeisCaracteres},
+      {'No mínimo um caracter especial': possuiCaractereEspecial},
+    ];
   }
 
   void changeActiveCheckBox() {
@@ -47,16 +54,10 @@ class SignupController {
     changeActiveButton();
   }
 
-  String? get senhaIsOk {
-    if (senha.trim().length >= 6)
-      return '';
-    else if (senha.trim().isNotEmpty)
-      return '';
-    else if (!senha.contains(especialRegex))
-      return '';
-    else if (!senha.contains(RegExp(r'[A-Z]')))
-      return '';
-    else if (senha == confirmSenha)
-      return '';
-  }
+  bool get possuiLetraMaiuscula => senha.contains(RegExp(r'[A-Z]'));
+  bool get possuiLetraMinuscula => senha.contains(RegExp(r'[a-z]'));
+  bool get senhasCoincidentes => senha == confirmSenha && senha.isNotEmpty;
+  bool get minSeisCaracteres => senha.length >= 6;
+  bool get possuiCaractereEspecial =>
+      senha.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
 }

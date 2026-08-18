@@ -6,4 +6,6 @@ class AppColors {
   static const Color errorRed = Colors.red;
   static const Color white = Color.fromARGB(255, 255, 255, 255);
   static const Color grey140 = Color.fromARGB(255, 140, 140, 140);
+  static final Color grey = Colors.grey;
+  static final Color green = Colors.green;
 }
