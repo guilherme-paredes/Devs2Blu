@@ -18,7 +18,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   LoginController loginController = LoginController();
-
+  final GlobalKey<FormState> key =GlobalKey<FormState>();
   final SizedBox spacerBox = SizedBox(height: 16);
 
   @override
@@ -26,6 +26,19 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  Future<void> _handleLogin() async{
+    if(key.currentState!.validate()){
+      setState(() {
+        loginController.isLoading = true;
+      });
+
+    await loginController.login();
+    setState(() {
+      loginController.isLoading = false;
+    });
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,87 +50,86 @@ class _LoginPageState extends State<LoginPage> {
                 MediaQuery.of(context).padding.top,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Spacer(),
-                  Container(
-                    width: 125,
-                    height: 125,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/login.png'),
+              child: Form(
+                key: key,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Spacer(),
+                    Image.asset('assets/images/login.png', height: 120),
+                    spacerBox,
+                    Center(
+                      child: Text('+DevsEcomm', style: AppTextStyles.title),
                       ),
-                    ),
-                  ),
-                  spacerBox,
-                  Center(child: Text('+DevsEcomm', style: AppTextStyles.title)),
-                  Spacer(flex: 2),
-                  AppTextField(
-                    errorText: loginController.emailError,
-                    hintText: 'email@dominio.com',
-                    onChanged: (value) {
-                      setState(() {
-                        loginController.setEmail(value);
-                      });
-                    },
-                  ),
-                  spacerBox,
-                  AppTextField(
-                    errorText: loginController.senhaError,
-                    hintText: '*****************',
-                    obscureText: true,
-                    onChanged: (value) {
-                      setState(() {
-                        loginController.setSenha(value);
-                      });
-                    },
-                  ),
-                  Row(
-                    children: [
-                      AppCheckBox(
-                        value: loginController.isActiveCheckBox,
-                        onChanged: (value) => {
-                          setState(() {
-                            loginController.changeActiveCheckBox();
-                          }),
-                        },
-                      ),
-                      Text('Lembrar-me'),
-                    ],
-                  ),
-                  Align(
-                    alignment: AlignmentGeometry.centerRight,
-                    child: TextButton(
-                      onPressed: () => {
-                        Navigator.pushNamed(context, RecoverPage.route),
+                    Spacer(flex: 2),
+                    AppTextField(
+                      controller: loginController.emailController,
+                      validator: (value){
+                        return loginController.validateEmail(value);
                       },
-                      child: Text(
-                        'Esqueci minha senha',
-                        style: AppTextStyles.smalBlack,
+                      hintText: 'email@dominio.com',
+                    ),
+                    spacerBox,
+
+                    AppTextField(
+                      controller: loginController.senhaController,
+                      validator: (value){
+                        return loginController.validateSenha(value);
+                      },
+                      hintText: '*****************',
+                      obscureText: true,
+                      
+                    ),
+                    Row(
+                      children: [
+                        AppCheckBox(
+                          value: loginController.isActiveCheckBox,
+                          onChanged: (value) => {
+                            setState(() {
+                              loginController.changeActiveCheckBox();
+                            }),
+                          },
+                        ),
+                        Text('Lembrar-me'),
+                      ],
+                    ),
+                    Align(
+                      alignment: AlignmentGeometry.centerRight,
+                      child: TextButton(
+                        onPressed: () => {
+                          Navigator.pushNamed(context, RecoverPage.route),
+                        },
+                        child: Text(
+                          'Esqueci minha senha',
+                          style: AppTextStyles.smalBlack,
+                        ),
                       ),
                     ),
-                  ),
-                  spacerBox,
-                  AppElevatedButton(
-                    onPressed: loginController.isActiveButton ? () {} : null,
-                    label: 'Entrar',
-                    type: ButtonType.filled,
-                  ),
-                  spacerBox,
-                  AppElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, SignupPage.route);
-                    },
-                    label: 'Cadastrar',
-                    type: ButtonType.unfilled,
-                  ),
-                  const Spacer(flex: 2),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Center(
+                    spacerBox,
+                    AppElevatedButton(
+                      onPressed: _handleLogin,
+                      label: 'Entrar',
+                      isLoading: loginController.isLoading,
+                      type: ButtonType.filled,
+                    ),
+
+                    spacerBox,
+
+                    AppElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, SignupPage.route);
+                      },
+                      label: 'Cadastrar',
+                      type: ButtonType.unfilled,
+                    ),
+
+                    const Spacer(flex: 2),
+
+                    GestureDetector(
+                      onTap: () {},
                       child: RichText(
+                        textAlign: TextAlign.center,
                         text: TextSpan(
                           children: [
                             TextSpan(
@@ -145,9 +157,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                  ),
-                  Spacer(),
-                ],
+                    Spacer(),
+                  ],
+                ),
               ),
             ),
           ),

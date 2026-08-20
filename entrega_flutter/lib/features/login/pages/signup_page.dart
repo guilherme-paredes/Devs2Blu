@@ -19,34 +19,28 @@ class _SignupPageState extends State<SignupPage> {
   final SizedBox spacerBox = SizedBox(height: 16);
 
   SignupController signupController = SignupController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
+      appBar: AppBar(title: const Text('Cadastro'), centerTitle: true,),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height:
-                MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top,
-            child: Padding(
-              padding: const EdgeInsetsGeometry.symmetric(horizontal: 24),
+        child: Padding(padding: const EdgeInsets.symmetric(horizontal:24),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   spacerBox,
-                  Text('Crie uma conta', style: AppTextStyles.title),
-                  Text(
-                    'Insira seus dados para iniciar suas compras',
-                    style: AppTextStyles.smalBlack,
+                  Text('Criar uma conta', 
+                  style: AppTextStyles.title, 
+                  textAlign: TextAlign.center,),
+                  SizedBox(height: 8),
+                  Center(
+                    child: Text(
+                      'Insira seus dados para iniciar suas compras',
+                      style: AppTextStyles.smalBlack,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  Spacer(),
+                  SizedBox(height: 32),
                   AppTextField(
                     hintText: 'email@dominio.com',
                     onChanged: (value) {
@@ -56,7 +50,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                   ),
 
-                  spacerBox,
+                  SizedBox(height: 16,),
                   AppTextField(
                     hintText: 'Nome',
                     onChanged: (value) {
@@ -65,7 +59,7 @@ class _SignupPageState extends State<SignupPage> {
                       });
                     },
                   ),
-                  spacerBox,
+                  SizedBox(height: 16),
                   AppTextField(
                     hintText: 'Senha',
                     onChanged: (value) {
@@ -76,7 +70,7 @@ class _SignupPageState extends State<SignupPage> {
                     obscureText: true,
                   ),
                   
-                  spacerBox,
+                  SizedBox(height: 16),
                   AppTextField(
                     hintText: 'Confirmar Senha',
                     onChanged: (value) {
@@ -84,6 +78,7 @@ class _SignupPageState extends State<SignupPage> {
                         signupController.setConfirmSenha(value);
                       });
                     },
+                    obscureText: true,
                   ),
                   for (var requiremnt
                       in signupController.getPasswordRequirements())
@@ -91,7 +86,7 @@ class _SignupPageState extends State<SignupPage> {
                       atendido: requiremnt.values.first,
                       text: requiremnt.keys.first,
                     ),
-                  Spacer(flex: 6),
+                  Spacer(),
                   Row(
                     children: [
                       AppCheckBox(
@@ -132,18 +127,28 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  SizedBox(height: 16),
                   AppElevatedButton(
                     label: 'continuar',
-                    onPressed: signupController.isActiveButton ? () {} : null,
+                    isLoading: signupController.isLoading,
+                    onPressed: signupController.isActiveButton ? () async{
+                      setState(() {
+                        signupController.isLoading = true;
+                      });
+                      await signupController.signUp();
+                      
+                      setState(() {
+                        signupController.isLoading = false;
+                      });
+                    }
+                    : null,
                     type: ButtonType.filled,
                   ),
+                  SizedBox(height: 16),
                 ],
               ),
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 }

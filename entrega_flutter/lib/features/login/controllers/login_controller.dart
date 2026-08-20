@@ -1,42 +1,35 @@
+import 'package:flutter/material.dart';
+
 class LoginController {
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  final int _caracterMinimoSenha = 6;
   bool isActiveCheckBox = false;
-  String email = '';
-  String senha = '';
-  bool isActiveButton = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController senhaController = TextEditingController();
+  bool isLoading = false;
+  bool get isEmailValid => _emailRegex.hasMatch(emailController.text.trim());
+  bool get isSenhaValid => senhaController.text.trim().length>= _caracterMinimoSenha;
 
-  bool get isEmailValid => _emailRegex.hasMatch(email.trim());
-  bool get isSenhaValid => senha.trim().length >= 6;
+  void changeActiveCheckBox() {
+    isActiveCheckBox = !isActiveCheckBox;
+  }
 
-  String? get emailError {
-    if (email.trim().isEmpty || _emailRegex.hasMatch(email.trim())) {
+  Future<void> login() async{
+    await Future.delayed(const Duration(seconds: 2));
+  }
+
+  String? validateEmail(String? value){
+    if(_emailRegex.hasMatch(emailController.text)){
       return null;
     }
     return 'E-mail invalido';
   }
-
-  String? get senhaError {
-    if (senha.trim().length >= 6 || senha.trim().isEmpty) {
+  
+  String? validateSenha(String? value){
+    if(senhaController.text.length >=_caracterMinimoSenha){
       return null;
     }
     return 'Senha invalida';
   }
 
-  void setEmail(String emailParam) {
-    email = emailParam;
-    changeActiveButton();
-  }
-
-  void setSenha(String senhaParam) {
-    senha = senhaParam;
-    changeActiveButton();
-  }
-
-  void changeActiveButton() {
-    isActiveButton = isEmailValid && isSenhaValid;
-  }
-
-  void changeActiveCheckBox() {
-    isActiveCheckBox = !isActiveCheckBox;
-  }
 }

@@ -4,8 +4,8 @@ class SignupController {
   String nome = '';
   String confirmSenha = '';
   bool isActiveButton = false;
+  bool isLoading = false;
   bool isActiveCheckBox = false;
-  bool isOk = false;
 
   void setEmail(String emailParam) {
     email = emailParam;
@@ -27,14 +27,23 @@ class SignupController {
     changeActiveButton();
   }
 
+  List<Map<String, bool>> getPasswordRequirements(){
+     return [
+      {'Mínimo de 6 caracteres': minSeisCaracteres},
+      {'No mínimo um caracter especial': possuiCaractereEspecial},
+      {'No mínimo uma letra maiúscula': possuiLetraMaiuscula},
+      {'No mínimo uma letra minúscula': possuiLetraMinuscula},
+      {'Senhas coincidem': senhasCoincidentes},
+    ];
+  }
+
   void changeActiveButton() {
     isActiveButton =
         email.trim().isNotEmpty &&
         nome.trim().isNotEmpty &&
         senha.trim().isNotEmpty &&
         confirmSenha.trim().isNotEmpty &&
-        isActiveCheckBox;
-    isActiveCheckBox &&
+        isActiveCheckBox &&
         minSeisCaracteres &&
         possuiCaractereEspecial &&
         possuiLetraMaiuscula &&
@@ -42,16 +51,13 @@ class SignupController {
         senhasCoincidentes;
   }
 
-  List<Map<String, bool>> getPasswordRequirements() {
-    return [
-      {'Mínimo de 6 caracteres': minSeisCaracteres},
-      {'No mínimo um caracter especial': possuiCaractereEspecial},
-    ];
-  }
-
   void changeActiveCheckBox() {
     isActiveCheckBox = !isActiveCheckBox;
     changeActiveButton();
+  }
+
+  Future<void> signUp() async{
+    await Future.delayed(Duration(seconds:2));
   }
 
   bool get possuiLetraMaiuscula => senha.contains(RegExp(r'[A-Z]'));
